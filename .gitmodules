@@ -1,0 +1,3 @@
+[submodule "external/OmniDebugger"]
+	path = external/OmniDebugger
+	url = https://github.com/DanilChizhikov/OmniDebugger.git

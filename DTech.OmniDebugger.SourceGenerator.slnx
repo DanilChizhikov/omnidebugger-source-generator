@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DTech.OmniDebugger.SourceGenerator/DTech.OmniDebugger.SourceGenerator.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DTech.OmniDebugger.SourceGenerator.Tests/DTech.OmniDebugger.SourceGenerator.Tests.csproj" />
+  </Folder>
+</Solution>
