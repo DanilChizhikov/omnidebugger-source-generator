@@ -1,6 +1,7 @@
 # Changelog
 
-## [Unreleased]
+## [2.2.1] - 2026-10-10
+Shipped with OmniDebugger 2.2.1.
 
 ### Changed
 - The generator moved out of the OmniDebugger repository into its own. The generator itself is unchanged.

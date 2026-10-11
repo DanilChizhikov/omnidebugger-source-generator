@@ -75,7 +75,8 @@ It writes code against OmniDebugger's contracts, so each version goes with the O
 
 | Generator | OmniDebugger |
 |---|---|
-| 2.2.0 | 2.2.x |
+| 2.2.1 | 2.2.0-2.2.1 |
+| 2.2.0 | 2.2.0-2.2.1 |
 | 2.0.0 | 2.0.x – 2.1.x |
 
 ## Building
