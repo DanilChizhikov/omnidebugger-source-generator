@@ -1,0 +1,59 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    branches:
+      - master
+      - develop
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test Generator
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Run tests
+        run: >
+          dotnet test tests/DTech.OmniDebugger.SourceGenerator.Tests -c Release
+          --logger "trx;LogFileName=results.trx" --results-directory artifacts
+
+      - name: Assert tests actually ran
+        if: always()
+        shell: bash
+        run: |
+          file=$(find artifacts -name '*.trx' | head -n 1)
+          if [ -z "$file" ]; then
+            echo "No test results produced"
+            exit 1
+          fi
+          total=$(grep -o 'total="[0-9]*"' "$file" | head -n 1 | grep -o '[0-9]*')
+          echo "results=$file total=${total:-0}"
+          if [ "${total:-0}" -lt 1 ]; then
+            echo "0 tests ran"
+            exit 1
+          fi
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: artifacts
