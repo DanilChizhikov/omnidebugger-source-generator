@@ -1,5 +1,5 @@
 # OmniDebugger Source Generator
-![CI](https://github.com/DanilChizhikov/omnidebugger-source-generator/actions/workflows/ci.yml/badge.svg?branch=master)
+![Tests](https://github.com/DanilChizhikov/omnidebugger-source-generator/actions/workflows/tests.yml/badge.svg?branch=master)
 
 The Roslyn source generator behind [OmniDebugger](https://github.com/DanilChizhikov/OmniDebugger), a runtime cheat
 and debug panel for Unity. OmniDebugger ships it prebuilt as `Runtime/Analyzers/DTech.OmniDebugger.SourceGenerator.dll`;
@@ -119,8 +119,8 @@ package, so replacing the DLL is enough.
   change to the generator. It is stamped into the DLL and into the `[GeneratedCode]` attribute of the generated code,
   which is how a project tells which generator it has.
 - Note the change in [CHANGELOG.md](CHANGELOG.md).
-- Tag the release `vX.Y.Z`: CI tests it, builds the DLL and attaches it to the GitHub release. Every push and pull
-  request also uploads the DLL as a build artifact.
+- Tag the release `vX.Y.Z`: the *Release* workflow tests it, builds the DLL and attaches it to the GitHub release.
+  The *Tests* workflow runs the tests on every push and pull request to `master` and `develop`.
 
 ## Repository Layout
 | Path | Contents |

@@ -9,8 +9,8 @@
 - The tests compile against OmniDebugger from the `external/OmniDebugger` submodule, or from `OMNIDEBUGGER_PATH`.
 
 ### Added
-- CI: tests and builds every push and pull request, uploads the DLL as an artifact, and attaches it to the GitHub
-  release of a `v*` tag.
+- GitHub Actions: *Tests* runs the tests on every push and pull request to `master` and `develop`; *Release* tests
+  and builds a `v*` tag and attaches the DLL to its GitHub release.
 
 ## [2.2.0] - 2026-10-04
 Shipped with OmniDebugger 2.2.0.

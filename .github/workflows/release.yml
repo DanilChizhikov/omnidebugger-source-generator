@@ -1,35 +1,38 @@
-name: CI
+name: Release
 
 on:
   push:
-    branches: [ master, develop ]
-    tags: [ 'v*' ]
-  pull_request:
-    branches: [ master, develop ]
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  release:
+    name: Build and Release
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - uses: actions/setup-dotnet@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
 
-      - name: Test
+      - name: Run tests
         run: dotnet test tests/DTech.OmniDebugger.SourceGenerator.Tests -c Release
 
-      - name: Build
+      - name: Build generator
         run: dotnet build src/DTech.OmniDebugger.SourceGenerator -c Release
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload DLL
+        uses: actions/upload-artifact@v4
         with:
           name: DTech.OmniDebugger.SourceGenerator
           path: src/DTech.OmniDebugger.SourceGenerator/bin/Release/netstandard2.0/DTech.OmniDebugger.SourceGenerator.dll
