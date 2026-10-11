@@ -9,8 +9,10 @@
 - The tests compile against OmniDebugger from the `external/OmniDebugger` submodule, or from `OMNIDEBUGGER_PATH`.
 
 ### Added
-- GitHub Actions: *Tests* runs the tests on every push and pull request to `master` and `develop`; *Release* tests
-  and builds a `v*` tag and attaches the DLL to its GitHub release.
+- GitHub Actions: *Tests* runs the tests on every push and pull request to `master` and `develop`. *Release* checks a
+  `release/X.Y.Z` or `hotfix/X.Y.Z` pull request into `master` (version, CHANGELOG section, description) and, once
+  it is merged, tags the merge commit `vX.Y.Z` and publishes the release with the pull request's description as its
+  notes and the freshly built DLL, checked to carry that version, attached.
 
 ## [2.2.0] - 2026-10-04
 Shipped with OmniDebugger 2.2.0.

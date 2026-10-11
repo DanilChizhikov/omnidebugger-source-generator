@@ -115,12 +115,25 @@ is. Unity keeps the DLL's import settings (the `RoslynAnalyzer` label, no platfo
 package, so replacing the DLL is enough.
 
 ## Versioning and Releases
-- Bump `<Version>` in `src/DTech.OmniDebugger.SourceGenerator/DTech.OmniDebugger.SourceGenerator.csproj` with every
-  change to the generator. It is stamped into the DLL and into the `[GeneratedCode]` attribute of the generated code,
-  which is how a project tells which generator it has.
-- Note the change in [CHANGELOG.md](CHANGELOG.md).
-- Tag the release `vX.Y.Z`: the *Release* workflow tests it, builds the DLL and attaches it to the GitHub release.
-  The *Tests* workflow runs the tests on every push and pull request to `master` and `develop`.
+Every change to the generator gets a new version: `<Version>` in
+`src/DTech.OmniDebugger.SourceGenerator/DTech.OmniDebugger.SourceGenerator.csproj` is stamped into the DLL and into the
+`[GeneratedCode]` attribute of the generated code, which is how a project tells which generator it has.
+
+Work goes to `develop` (the *Tests* workflow runs on every push and pull request to `master` and `develop`). A release
+is a pull request into `master`, and merging it publishes the release:
+
+1. Branch `release/X.Y.Z` off `develop` — or `hotfix/X.Y.Z` off `master` for a fix.
+2. Set `<Version>` to `X.Y.Z` and add a `## [X.Y.Z] - YYYY-MM-DD` section to [CHANGELOG.md](CHANGELOG.md).
+3. Open a pull request into `master`. Its description becomes the release notes — usually that CHANGELOG section.
+4. The *Release* workflow checks the pull request on every push and every edit of the description: the branch
+   version, `<Version>` and the CHANGELOG section agree, the description is not empty and `vX.Y.Z` is not taken yet.
+5. Merge it. *Release* builds the generator from the merge commit, runs the tests, checks the DLL carries version
+   `X.Y.Z`, tags the merge commit `vX.Y.Z` and publishes the release with the description as its notes and
+   `DTech.OmniDebugger.SourceGenerator.dll` attached — the file to drop into OmniDebugger's `Runtime/Analyzers`.
+6. Merge `master` back into `develop`.
+
+Make *Tests* and *Release / Validate Release* required checks of `master` so a release that is not ready cannot be
+merged.
 
 ## Repository Layout
 | Path | Contents |
@@ -129,6 +142,8 @@ package, so replacing the DLL is enough.
 | `tests/DTech.OmniDebugger.SourceGenerator.Tests` | xUnit tests: run the generator on a source and check its output and diagnostics |
 | `external/OmniDebugger` | OmniDebugger, as a submodule — the contracts the tests compile against |
 | `build.sh` | Test, build and copy into a package |
+| `.github/workflows` | *Tests* and *Release* |
+| `.github/scripts/release-version.sh` | The checks a release pull request has to pass |
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
